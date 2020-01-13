@@ -11,6 +11,6 @@ public interface InputParser {
 
     String[] parseLine(String line);
 
-    void showOutPut(Map<String, PlayerData> data);
+    String showOutPut(Map<String, PlayerData> data);
 
 }

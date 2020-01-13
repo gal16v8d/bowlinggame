@@ -4,5 +4,7 @@ public interface BowlingGame {
 
     void executeGame();
 
-    void beginGame();
+    void getScannerMenu();
+
+    void beginGame(String filePath);
 }

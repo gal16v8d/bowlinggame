@@ -49,7 +49,7 @@ public class InputParserImpl implements InputParser {
     }
 
     @Override
-    public void showOutPut(Map<String, PlayerData> play) {
+    public String showOutPut(Map<String, PlayerData> play) {
         StringBuilder playerStats = new StringBuilder();
         StringBuilder pinfallLine = new StringBuilder();
         StringBuilder scoreLine = new StringBuilder();
@@ -78,7 +78,7 @@ public class InputParserImpl implements InputParser {
         StringBuilder output = new StringBuilder();
         output.append(System.lineSeparator()).append(buildFrameLine()).append(System.lineSeparator())
                 .append(playerStats.toString());
-        log.info(output.toString());
+        return output.toString();
     }
 
     protected String buildFrameLine() {
