@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.2.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>co.com.jobsity</groupId>
+	<artifactId>bowlinggame</artifactId>
+	<version>1.0.0.001-SNAPSHOT</version>
+	<name>bowlinggame</name>
+	<description>Spring commandline bowling game</description>
+	
+	<repositories>
+		<repository>
+			<id>central</id>
+			<url>http://repo.maven.apache.org/maven2</url>
+		</repository>
+		<repository>
+			<id>jcenter</id>
+			<url>http://bintray.com/bintray/jcenter</url>
+		</repository>
+		<repository>
+			<id>spring.repo</id>
+			<url>http://repo.spring.io/plugins-release/</url>
+		</repository>
+	</repositories>
+
+	<properties>
+		<project.encoding>UTF-8</project.encoding>
+		<project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
+		<project.build.targetEncoding>${project.encoding}</project.build.targetEncoding>
+		<project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
+		<java.version>12</java.version>
+		
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<mvn.jacoco.plugin.version>0.8.5</mvn.jacoco.plugin.version>
+		<mvn.failsafe.plugin.version>3.0.0-M4</mvn.failsafe.plugin.version>
+		<mvn.surefire.plugin.version>3.0.0-M4</mvn.surefire.plugin.version>
+		<mvn.format.plugin.version>2.10.0</mvn.format.plugin.version>
+		
+		<!-- If true skips UT test execution -->
+		<skip.unit.tests>false</skip.unit.tests>
+		<!-- If true skips IT test execution -->
+		<skip.integration.tests>false</skip.integration.tests>
+
+		<!-- JaCoCo props -->
+		<jacoco.ut.exec>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.exec>
+		<jacoco.ut.reportPath>${project.build.directory}/coverage-reports/jacoco-ut</jacoco.ut.reportPath>
+		<jacoco.it.exec>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.exec>
+		<jacoco.it.reportPath>${project.build.directory}/coverage-reports/jacoco-it</jacoco.it.reportPath>
+		
+		<!-- Other dependenies -->
+		<commons.io.version>2.6</commons.io.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons.io.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+
+			<!-- Used for unit tests -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${mvn.surefire.plugin.version}</version>
+				<configuration>
+					<!-- Sets the VM argument line used when unit tests are run. -->
+					<argLine>${surefireArgLine}</argLine>
+					<skipTests>${skip.unit.tests}</skipTests>
+					<!-- Excludes integration tests when unit tests are run. -->
+					<excludes>
+						<exclude>**/IT*.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>${mvn.failsafe.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>integration-tests</id>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+						<configuration>
+							<!-- Sets the VM argument line used when integration tests are run. -->
+							<argLine>${failsafeArgLine}</argLine>
+							<skipTests>${skip.integration.tests}</skipTests>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${mvn.jacoco.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>pre-unit-test</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<destFile>${jacoco.ut.exec}</destFile>
+							<propertyName>surefireArgLine</propertyName>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<dataFile>${jacoco.ut.exec}</dataFile>
+							<outputDirectory>${jacoco.ut.reportPath}</outputDirectory>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>pre-integration-test</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<destFile>${jacoco.it.exec}</destFile>
+							<propertyName>failsafeArgLine</propertyName>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>post-integration-test</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<dataFile>${jacoco.it.exec}</dataFile>
+							<outputDirectory>${jacoco.it.reportPath}</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>net.revelc.code.formatter</groupId>
+				<artifactId>formatter-maven-plugin</artifactId>
+				<version>${mvn.format.plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>validate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
