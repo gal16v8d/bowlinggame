@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -11,22 +10,18 @@
 	</parent>
 	<groupId>co.com.jobsity</groupId>
 	<artifactId>bowlinggame</artifactId>
-	<version>1.0.0.001-SNAPSHOT</version>
+	<version>1.0.001-SNAPSHOT</version>
 	<name>bowlinggame</name>
 	<description>Spring commandline bowling game</description>
 
 	<repositories>
 		<repository>
 			<id>central</id>
-			<url>http://repo.maven.apache.org/maven2</url>
-		</repository>
-		<repository>
-			<id>jcenter</id>
-			<url>http://bintray.com/bintray/jcenter</url>
+			<url>https://repo.maven.apache.org/maven2</url>
 		</repository>
 		<repository>
 			<id>spring.repo</id>
-			<url>http://repo.spring.io/plugins-release/</url>
+			<url>https://repo.spring.io/plugins-release/</url>
 		</repository>
 	</repositories>
 
@@ -40,8 +35,6 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<mvn.jacoco.plugin.version>0.8.5</mvn.jacoco.plugin.version>
-		<mvn.failsafe.plugin.version>3.0.0-M4</mvn.failsafe.plugin.version>
-		<mvn.surefire.plugin.version>3.0.0-M4</mvn.surefire.plugin.version>
 		<mvn.format.plugin.version>2.10.0</mvn.format.plugin.version>
 
 		<!-- If true skips UT test execution -->
@@ -121,7 +114,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${mvn.surefire.plugin.version}</version>
 				<configuration>
 					<!-- Sets the VM argument line used when unit tests are run. -->
 					<argLine>${surefireArgLine}</argLine>
@@ -136,7 +128,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>${mvn.failsafe.plugin.version}</version>
 				<executions>
 					<execution>
 						<id>integration-tests</id>
@@ -227,7 +218,7 @@
 				<executions>
 					<execution>
 						<goals>
-							<goal>validate</goal>
+							<goal>format</goal>
 						</goals>
 					</execution>
 				</executions>

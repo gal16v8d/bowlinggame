@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
@@ -34,7 +33,6 @@ public class FileProcessorTest {
     }
 
     @Test
-    @RepeatedTest(2)
     public void getFileLinesTest() throws IOException {
         File file = prepareTestFile();
         List<String> lines = fileProcessor.getFileLines(file.getAbsolutePath());

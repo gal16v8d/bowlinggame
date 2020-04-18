@@ -47,16 +47,12 @@ public class ScoreFillerImpl implements ScoreFiller {
 
     public int getNextScore(BowlingFrame currentFrame, List<BowlingFrame> frames, int bonusPins) {
         int nextScore = 0;
-        if (currentFrame.isBonus()) {
-            nextScore += sumFramePinfalls(currentFrame);
-        } else {
-            List<Pinfall> currentFall = getNextValidPinFalls(frames.get(currentFrame.getNumber()));
-            if (currentFall.size() < bonusPins) {
-                currentFall.addAll(getNextValidPinFalls(frames.get(currentFrame.getNumber() + 1)));
-            }
-            for (int i = 0; i < bonusPins; i++) {
-                nextScore += Optional.ofNullable(currentFall.get(i).getFall()).orElse(0);
-            }
+        List<Pinfall> currentFall = getNextValidPinFalls(frames.get(currentFrame.getNumber()));
+        if (currentFall.size() < bonusPins) {
+            currentFall.addAll(getNextValidPinFalls(frames.get(currentFrame.getNumber() + 1)));
+        }
+        for (int i = 0; i < bonusPins; i++) {
+            nextScore += Optional.ofNullable(currentFall.get(i).getFall()).orElse(0);
         }
         return nextScore;
     }

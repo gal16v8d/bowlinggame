@@ -3,10 +3,10 @@ package co.com.jobsity.bowling.components.game;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -33,21 +33,26 @@ public class BowlingGameTest {
         MockitoAnnotations.initMocks(this);
     }
 
+    @AfterEach
+    public void tearDown() {
+        Mockito.reset(bowlingGame);
+    }
+
     @Test
     public void executeGameTest() {
-        BDDMockito.doNothing().when(bowlingGame).getScannerMenu();
+        Mockito.doNothing().when(bowlingGame).getScannerMenu();
         bowlingGame.executeGame();
-        BDDMockito.verify(bowlingGame).getScannerMenu();
+        Mockito.verify(bowlingGame).getScannerMenu();
     }
 
     @Test
     public void beginGameTest() {
-        BDDMockito.willReturn(new ArrayList<>()).given(fileProcessor).getFileLines(Mockito.anyString());
-        BDDMockito.willReturn(new HashMap<>()).given(inputParser).processInput(Mockito.anyList());
-        BDDMockito.willReturn("").given(inputParser).showOutPut(Mockito.anyMap());
+        Mockito.doReturn(new ArrayList<>()).when(fileProcessor).getFileLines(Mockito.anyString());
+        Mockito.doReturn(new HashMap<>()).when(inputParser).processInput(Mockito.anyList());
+        Mockito.doReturn("").when(inputParser).showOutPut(Mockito.anyMap());
         bowlingGame.beginGame("test");
-        BDDMockito.verify(fileProcessor).getFileLines(Mockito.anyString());
-        BDDMockito.verify(inputParser).processInput(Mockito.anyList());
-        BDDMockito.verify(inputParser).showOutPut(Mockito.anyMap());
+        Mockito.verify(fileProcessor).getFileLines(Mockito.anyString());
+        Mockito.verify(inputParser).processInput(Mockito.anyList());
+        Mockito.verify(inputParser).showOutPut(Mockito.anyMap());
     }
 }
