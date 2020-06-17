@@ -20,26 +20,29 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class InputParserImpl implements InputParser {
 
+    private final InputValidator inputValidator;
+    private final PinfallFiller pinfallFiller;
+    private final BowlingValidation bowlingValidation;
+    private final ScoreFiller scoreFiller;
+
     @Autowired
-    private InputValidator inputValidator;
-    @Autowired
-    private PinfallFiller pinfallFiller;
-    @Autowired
-    private BowlingValidation bowlingValidation;
-    @Autowired
-    private ScoreFiller scoreFiller;
+    public InputParserImpl(InputValidator inputValidator, PinfallFiller pinfallFiller,
+            BowlingValidation bowlingValidation, ScoreFiller scoreFiller) {
+        this.inputValidator = inputValidator;
+        this.pinfallFiller = pinfallFiller;
+        this.bowlingValidation = bowlingValidation;
+        this.scoreFiller = scoreFiller;
+    }
 
     @Override
     public Map<String, PlayerData> processInput(List<String> lines) {
         Map<String, PlayerData> play = new HashMap<>();
-        lines.stream().forEach(line -> {
+        lines.stream().forEach((String line) -> {
             String[] data = parseLine(line);
             log.debug("{} is valid {}", line, inputValidator.lineIsValid(data));
             addRollToPlayer(play, data);
         });
-        play.entrySet().parallelStream().forEach(entry -> {
-            scoreFiller.fillFrameScore(entry.getValue());
-        });
+        play.entrySet().parallelStream().forEach(entry -> scoreFiller.fillFrameScore(entry.getValue()));
         return play;
     }
 
@@ -59,7 +62,7 @@ public class InputParserImpl implements InputParser {
             pinfallLine.append(BowlingOutputConstants.PINFALLS).append(BowlingOutputConstants.SEPARATOR);
             scoreLine.append(BowlingOutputConstants.SCORE).append(BowlingOutputConstants.SEPARATOR);
             PlayerData data = entry.getValue();
-            data.getFrames().stream().forEach(frame -> {
+            data.getFrames().stream().forEach((BowlingFrame frame) -> {
                 frame.getPinfalls().stream().forEach(pinfall -> {
                     pinfallLine.append(pinfall.getFallValue()).append(BowlingOutputConstants.SEPARATOR);
                     log.debug("Showing stats for {} and frame {}, pinfall '{}'", entry.getKey(), frame.getNumber(),
@@ -90,7 +93,7 @@ public class InputParserImpl implements InputParser {
         return frameLine.toString();
     }
 
-    protected BowlingFrame getLastFrame(PlayerData data) {
+    BowlingFrame getLastFrame(PlayerData data) {
         return data.getFrames().get(data.getFrames().size() - 1);
     }
 
@@ -103,7 +106,7 @@ public class InputParserImpl implements InputParser {
         addPinfallByScore(data, currentRollValue);
     }
 
-    protected void initPlayerIfNotExists(Map<String, PlayerData> play, String player) {
+    void initPlayerIfNotExists(Map<String, PlayerData> play, String player) {
         if (play.get(player) == null) {
             List<BowlingFrame> frames = new ArrayList<>();
             frames.add(generateNewBowlingFrame(null));
@@ -112,14 +115,14 @@ public class InputParserImpl implements InputParser {
         }
     }
 
-    protected void checkAndInitNewFrame(PlayerData data) {
+    void checkAndInitNewFrame(PlayerData data) {
         BowlingFrame lastFrame = getLastFrame(data);
         if (bowlingValidation.isFrameFinished(lastFrame)) {
             data.getFrames().add(generateNewBowlingFrame(lastFrame));
         }
     }
 
-    protected BowlingFrame generateNewBowlingFrame(BowlingFrame previous) {
+    BowlingFrame generateNewBowlingFrame(BowlingFrame previous) {
         int prevNumber = Optional.ofNullable(previous).map(BowlingFrame::getNumber).orElse(0);
         BowlingFrame newFrame = BowlingFrame.builder().number(prevNumber + 1).pinfalls(new ArrayList<>()).build();
         if (newFrame.getNumber() == BowlingPinfallConstants.MAX_FRAME) {
@@ -128,7 +131,7 @@ public class InputParserImpl implements InputParser {
         return newFrame;
     }
 
-    protected void addPinfallByScore(PlayerData data, String currentRollValue) {
+    void addPinfallByScore(PlayerData data, String currentRollValue) {
         BowlingFrame lastFrame = getLastFrame(data);
         if (lastFrame.getNumber() < BowlingPinfallConstants.MAX_FRAME) {
             pinfallFiller.addPinfallByScore(lastFrame, currentRollValue);

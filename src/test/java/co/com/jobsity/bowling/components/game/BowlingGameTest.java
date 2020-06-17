@@ -7,11 +7,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import co.com.jobsity.bowling.components.parser.FileProcessor;
@@ -20,8 +18,6 @@ import co.com.jobsity.bowling.components.parser.InputParser;
 @ExtendWith(MockitoExtension.class)
 public class BowlingGameTest {
 
-    @Spy
-    @InjectMocks
     private BowlingGameImpl bowlingGame;
     @Mock
     private FileProcessor fileProcessor;
@@ -31,6 +27,7 @@ public class BowlingGameTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        bowlingGame = Mockito.spy(new BowlingGameImpl(fileProcessor, inputParser));
     }
 
     @AfterEach

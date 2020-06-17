@@ -20,7 +20,7 @@ public class FileProcessorImpl implements FileProcessor {
             File textFile = new File(filePath);
             return FileUtils.readLines(textFile, StandardCharsets.UTF_8.name());
         } catch (Exception e) {
-            log.error("Couldn't read file on {}", filePath);
+            log.error("Couldn't read file on {}", filePath, e);
             throw new BadBowlingInputException("Couldn't read file on " + filePath);
         }
     }

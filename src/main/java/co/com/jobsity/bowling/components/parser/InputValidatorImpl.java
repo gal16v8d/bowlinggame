@@ -24,12 +24,12 @@ public class InputValidatorImpl implements InputValidator {
     }
 
     private Map<String, Integer> validScoreInputs() {
-        Map<String, Integer> validScoreInputs = new HashMap<>();
-        validScoreInputs.put("F", 0);
+        Map<String, Integer> mapScoreInputs = new HashMap<>();
+        mapScoreInputs.put("F", 0);
         for (int i = 0; i <= 10; i++) {
-            validScoreInputs.put(String.valueOf(i), i);
+            mapScoreInputs.put(String.valueOf(i), i);
         }
-        return validScoreInputs;
+        return mapScoreInputs;
     }
 
 }

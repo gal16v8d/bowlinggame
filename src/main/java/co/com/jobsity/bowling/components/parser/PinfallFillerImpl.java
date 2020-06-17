@@ -15,8 +15,12 @@ import co.com.jobsity.bowling.model.Pinfall;
 @Component
 public class PinfallFillerImpl implements PinfallFiller {
 
+    private final BowlingValidation bowlingValidation;
+
     @Autowired
-    private BowlingValidation bowlingValidation;
+    public PinfallFillerImpl(BowlingValidation bowlingValidation) {
+        this.bowlingValidation = bowlingValidation;
+    }
 
     @Override
     public int getFallScore(String score) {
@@ -25,8 +29,7 @@ public class PinfallFillerImpl implements PinfallFiller {
 
     @Override
     public BowlingFrame addPinfallByScore(BowlingFrame frame, String score) {
-        List<Pinfall> falls = Optional.ofNullable(frame).map(BowlingFrame::getPinfalls)
-                .orElseGet(Collections::emptyList);
+        List<Pinfall> falls = frame.getPinfalls();
         if (falls.isEmpty()) {
             if (bowlingValidation.isStrike(score)) {
                 falls.add(Pinfall.builder().fallValue("").build());
@@ -60,7 +63,7 @@ public class PinfallFillerImpl implements PinfallFiller {
         return frame;
     }
 
-    protected Pinfall getPinfallForSpare(BowlingFrame frame, String score, int lastScore) {
+    Pinfall getPinfallForSpare(BowlingFrame frame, String score, int lastScore) {
         int newScore = getFallScore(score);
         int sum = lastScore + newScore;
         Pinfall pinfall;
@@ -73,7 +76,7 @@ public class PinfallFillerImpl implements PinfallFiller {
         return pinfall;
     }
 
-    protected void addPinfallOnLastRoundWhenNotStrike(BowlingFrame frame, String score) {
+    void addPinfallOnLastRoundWhenNotStrike(BowlingFrame frame, String score) {
         if (frame.getPinfalls().isEmpty()) {
             frame.getPinfalls().add(Pinfall.builder().fallValue(score).fall(getFallScore(score)).build());
         } else if (frame.getPinfalls().size() == 1) {
@@ -84,7 +87,7 @@ public class PinfallFillerImpl implements PinfallFiller {
         }
     }
 
-    protected void addPinfallOnLastFrameRollThree(BowlingFrame frame, String score) {
+    void addPinfallOnLastFrameRollThree(BowlingFrame frame, String score) {
         int firstAttempt = Optional.ofNullable(frame.getPinfalls().get(0)).map(Pinfall::getFall).orElse(0);
         int secondAttempt = Optional.ofNullable(frame.getPinfalls().get(1)).map(Pinfall::getFall).orElse(0);
         int thirdAttempt = getFallScore(score);

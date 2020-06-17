@@ -13,7 +13,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -26,7 +25,6 @@ import co.com.jobsity.bowling.model.Pinfall;
 public class BowlingValidationTest {
 
     @Spy
-    @InjectMocks
     private BowlingValidationImpl bowlingValidation;
 
     @BeforeEach

@@ -24,10 +24,14 @@ public class BowlingGameImpl implements BowlingGame, CommandLineRunner {
     protected static final String EXIT = "e";
     protected static final String READ = "r";
     private static final Scanner SCANNER = new Scanner(System.in);
+    private final FileProcessor fileProcessor;
+    private final InputParser inputParser;
+
     @Autowired
-    private FileProcessor fileProcessor;
-    @Autowired
-    private InputParser inputParser;
+    public BowlingGameImpl(FileProcessor fileProcessor, InputParser inputParser) {
+        this.fileProcessor = fileProcessor;
+        this.inputParser = inputParser;
+    }
 
     @Override
     public void executeGame() {
