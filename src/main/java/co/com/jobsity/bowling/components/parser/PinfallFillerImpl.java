@@ -4,23 +4,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import co.com.jobsity.bowling.components.validation.BowlingValidation;
 import co.com.jobsity.bowling.constants.BowlingPinfallConstants;
 import co.com.jobsity.bowling.model.BowlingFrame;
 import co.com.jobsity.bowling.model.Pinfall;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Component
 public class PinfallFillerImpl implements PinfallFiller {
 
     private final BowlingValidation bowlingValidation;
-
-    @Autowired
-    public PinfallFillerImpl(BowlingValidation bowlingValidation) {
-        this.bowlingValidation = bowlingValidation;
-    }
 
     @Override
     public int getFallScore(String score) {

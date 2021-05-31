@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -13,9 +12,11 @@ import co.com.jobsity.bowling.components.parser.FileProcessor;
 import co.com.jobsity.bowling.components.parser.InputParser;
 import co.com.jobsity.bowling.model.PlayerData;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@RequiredArgsConstructor
 @Getter
 @Component
 @Profile("dev")
@@ -26,12 +27,6 @@ public class BowlingGameImpl implements BowlingGame, CommandLineRunner {
     private static final Scanner SCANNER = new Scanner(System.in);
     private final FileProcessor fileProcessor;
     private final InputParser inputParser;
-
-    @Autowired
-    public BowlingGameImpl(FileProcessor fileProcessor, InputParser inputParser) {
-        this.fileProcessor = fileProcessor;
-        this.inputParser = inputParser;
-    }
 
     @Override
     public void executeGame() {

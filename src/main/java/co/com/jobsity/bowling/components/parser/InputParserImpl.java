@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import co.com.jobsity.bowling.components.validation.BowlingValidation;
@@ -14,9 +13,11 @@ import co.com.jobsity.bowling.constants.BowlingOutputConstants;
 import co.com.jobsity.bowling.constants.BowlingPinfallConstants;
 import co.com.jobsity.bowling.model.BowlingFrame;
 import co.com.jobsity.bowling.model.PlayerData;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@RequiredArgsConstructor
 @Component
 public class InputParserImpl implements InputParser {
 
@@ -24,15 +25,6 @@ public class InputParserImpl implements InputParser {
     private final PinfallFiller pinfallFiller;
     private final BowlingValidation bowlingValidation;
     private final ScoreFiller scoreFiller;
-
-    @Autowired
-    public InputParserImpl(InputValidator inputValidator, PinfallFiller pinfallFiller,
-            BowlingValidation bowlingValidation, ScoreFiller scoreFiller) {
-        this.inputValidator = inputValidator;
-        this.pinfallFiller = pinfallFiller;
-        this.bowlingValidation = bowlingValidation;
-        this.scoreFiller = scoreFiller;
-    }
 
     @Override
     public Map<String, PlayerData> processInput(List<String> lines) {

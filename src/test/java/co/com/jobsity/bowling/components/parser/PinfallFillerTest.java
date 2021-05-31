@@ -27,7 +27,7 @@ public class PinfallFillerTest {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         pinfallFillerImpl = Mockito.spy(new PinfallFillerImpl(bowlingValidation));
     }
 

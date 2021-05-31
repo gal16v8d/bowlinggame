@@ -29,7 +29,7 @@ public class BowlingValidationTest {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @DisplayName("When frame is not valid then frame is not finished")
