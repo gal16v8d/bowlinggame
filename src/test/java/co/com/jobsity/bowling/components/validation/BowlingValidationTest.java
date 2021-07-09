@@ -22,20 +22,20 @@ import co.com.jobsity.bowling.model.BowlingFrame;
 import co.com.jobsity.bowling.model.Pinfall;
 
 @ExtendWith(MockitoExtension.class)
-public class BowlingValidationTest {
+class BowlingValidationTest {
 
     @Spy
     private BowlingValidationImpl bowlingValidation;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @DisplayName("When frame is not valid then frame is not finished")
     @ParameterizedTest
     @MethodSource("frameNotValidInput")
-    public void isFrameFinishedWhenFrameIsNotValidTest(BowlingFrame frame) {
+    void isFrameFinishedWhenFrameIsNotValidTest(BowlingFrame frame) {
         Assertions.assertFalse(bowlingValidation.isFrameFinished(frame));
     }
 
@@ -46,7 +46,7 @@ public class BowlingValidationTest {
     @DisplayName("When bonus frame not contains 3 elements then frame is not finished")
     @ParameterizedTest
     @MethodSource("bonusFrameInput")
-    public void isFrameFinishedWhenBonusFrameNotCompleteTest(BowlingFrame frame) {
+    void isFrameFinishedWhenBonusFrameNotCompleteTest(BowlingFrame frame) {
         Assertions.assertFalse(bowlingValidation.isFrameFinished(frame));
     }
 
@@ -62,21 +62,21 @@ public class BowlingValidationTest {
 
     @DisplayName("When normal frame not contains 2 elements then frame is not finished")
     @Test
-    public void isFrameFinishedWhenNormalFrameNotCompleteTest() {
+    void isFrameFinishedWhenNormalFrameNotCompleteTest() {
         BowlingFrame frame = BowlingFrame.builder().pinfalls(List.of(arrangePinfall())).build();
         Assertions.assertFalse(bowlingValidation.isFrameFinished(frame));
     }
 
     @DisplayName("When normal frame contains 2 elements then frame is finished")
     @Test
-    public void isFrameFinishedWhenNormalFrameCompleteTest() {
+    void isFrameFinishedWhenNormalFrameCompleteTest() {
         BowlingFrame frame = BowlingFrame.builder().pinfalls(List.of(arrangePinfall(), arrangePinfall())).build();
         Assertions.assertTrue(bowlingValidation.isFrameFinished(frame));
     }
 
     @DisplayName("When bonus frame contains 3 elements then frame is finished")
     @Test
-    public void isFrameFinishedWhenBonusFrameNotCompleteTest() {
+    void isFrameFinishedWhenBonusFrameNotCompleteTest() {
         BowlingFrame frame = BowlingFrame.builder().bonus(true)
                 .pinfalls(List.of(arrangePinfall(), arrangePinfall(), arrangePinfall())).build();
         Assertions.assertTrue(bowlingValidation.isFrameFinished(frame));
@@ -85,46 +85,46 @@ public class BowlingValidationTest {
     @DisplayName("When score is not 'F' then is not a Fail")
     @ParameterizedTest(name = "{index} => When input is '{0}' then is not a fail")
     @ValueSource(strings = { "1", "2", "3", "X" })
-    public void isFailReturnFalseTest(String input) {
+    void isFailReturnFalseTest(String input) {
         Assertions.assertFalse(bowlingValidation.isFail(input));
     }
 
     @DisplayName("When score is 'F' then is a Fail")
     @Test
-    public void isFailReturnTrueTest() {
+    void isFailReturnTrueTest() {
         Assertions.assertTrue(bowlingValidation.isFail("F"));
     }
 
     @DisplayName("When score is not '10' then is not a Strike")
     @ParameterizedTest(name = "{index} => When input is '{0}' then is not a strike")
     @ValueSource(strings = { "1", "2", "3", "X", "F", "/" })
-    public void isStrikeReturnFalseTest(String input) {
+    void isStrikeReturnFalseTest(String input) {
         Assertions.assertFalse(bowlingValidation.isStrike(input));
     }
 
     @DisplayName("When score is '10' then is a Strike")
     @Test
-    public void isStrikeReturnTrueTest() {
+    void isStrikeReturnTrueTest() {
         Assertions.assertTrue(bowlingValidation.isStrike("10"));
     }
 
     @DisplayName("When score is not '10' then is not a Strike")
     @ParameterizedTest(name = "{index} => When input is '{0}' then is not a spare")
     @ValueSource(ints = { 1, 2, 3, 11, 0 })
-    public void isSpareReturnFalseTest(Integer input) {
+    void isSpareReturnFalseTest(Integer input) {
         Assertions.assertFalse(bowlingValidation.isSpare(input));
     }
 
     @DisplayName("When pin-falls are 10 pins then is a Spare")
     @Test
-    public void isSpareReturnTrueTest() {
+    void isSpareReturnTrueTest() {
         Assertions.assertTrue(bowlingValidation.isSpare(10));
     }
 
     @DisplayName("If sum of all fall pin is below to 10 and bonus is up zero then throw exc")
     @ParameterizedTest(name = "{index} => When input is '{0}' and bonus is '{1}' then exception is throw")
     @CsvSource({ "9,2", "5,1" })
-    public void checkIfValidOnLastFrameLaunchExcTest(int sumofAllFallPin, int bonusPin) {
+    void checkIfValidOnLastFrameLaunchExcTest(int sumofAllFallPin, int bonusPin) {
         BadBowlingInputException bbie = Assertions.assertThrows(BadBowlingInputException.class,
                 () -> bowlingValidation.checkIfValidFrameOnLastFrame(sumofAllFallPin, bonusPin));
         Assertions.assertEquals(BowlingValidationImpl.VALID_FRAME_LAST_FRAME_MSG, bbie.getMessage());
@@ -149,21 +149,21 @@ public class BowlingValidationTest {
     @DisplayName("If sum of all fall pin is not up to 10 then no throw exc")
     @ParameterizedTest(name = "{index} => When input is '{0}' then no exception is throw")
     @ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })
-    public void checkIfValidFrameNotLaunchExcTest(int sumofAllFallPin) {
+    void checkIfValidFrameNotLaunchExcTest(int sumofAllFallPin) {
         Assertions.assertDoesNotThrow(() -> bowlingValidation.checkIfValidFrame(sumofAllFallPin));
     }
 
     @DisplayName("When frame number is less than 10 will not throw exc")
     @ParameterizedTest(name = "{index} => When input is '{0}' then no exception is throw")
     @ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })
-    public void checkGameFramesNotThrowsExcTest(int frameNumber) {
+    void checkGameFramesNotThrowsExcTest(int frameNumber) {
         Assertions.assertDoesNotThrow(() -> bowlingValidation.checkGameFrames(frameNumber));
     }
 
     @DisplayName("When frame number is more than 10 will throw exc")
     @ParameterizedTest(name = "{index} => When input is '{0}' then exception is throw")
     @ValueSource(ints = { 11, 100, 1000 })
-    public void checkGameFrameThrowsExcTest(int frameNumber) {
+    void checkGameFrameThrowsExcTest(int frameNumber) {
         BadBowlingInputException bbie = Assertions.assertThrows(BadBowlingInputException.class,
                 () -> bowlingValidation.checkGameFrames(frameNumber));
         Assertions.assertEquals(BowlingValidationImpl.GAME_FRAMES_MSG, bbie.getMessage());

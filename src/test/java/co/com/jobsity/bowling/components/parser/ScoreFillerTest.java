@@ -18,18 +18,18 @@ import co.com.jobsity.bowling.model.Pinfall;
 import co.com.jobsity.bowling.model.PlayerData;
 
 @ExtendWith(MockitoExtension.class)
-public class ScoreFillerTest {
+class ScoreFillerTest {
 
     @Spy
     private ScoreFillerImpl scoreFiller;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void fillFrameScoreTest() {
+    void fillFrameScoreTest() {
         PlayerData data = initPlayerData();
         PlayerData result = scoreFiller.fillFrameScore(data);
         Assertions.assertNotNull(result);
@@ -64,7 +64,7 @@ public class ScoreFillerTest {
     }
 
     @Test
-    public void getNextValidPinFallsTest() {
+    void getNextValidPinFallsTest() {
         BowlingFrame frame = BowlingFrame.builder().pinfalls(List.of(arrangePinfallWithFallValue(null),
                 arrangePinfallWithFallValue(""), arrangePinfallWithFallValue(" "), arrangePinfallWithFallValue("X")))
                 .build();
@@ -79,7 +79,7 @@ public class ScoreFillerTest {
     }
 
     @Test
-    public void sumFramePinfallsTest() {
+    void sumFramePinfallsTest() {
         BowlingFrame frame = BowlingFrame.builder()
                 .pinfalls(List.of(arrangePinfall(null), arrangePinfall(10), arrangePinfall(8))).build();
         Assertions.assertEquals(18, scoreFiller.sumFramePinfalls(frame));

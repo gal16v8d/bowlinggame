@@ -19,33 +19,33 @@ import co.com.jobsity.bowling.model.BowlingFrame;
 import co.com.jobsity.bowling.model.Pinfall;
 
 @ExtendWith(MockitoExtension.class)
-public class PinfallFillerTest {
+class PinfallFillerTest {
 
     @Mock
     private BowlingValidation bowlingValidation;
     private PinfallFillerImpl pinfallFillerImpl;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
         pinfallFillerImpl = Mockito.spy(new PinfallFillerImpl(bowlingValidation));
     }
 
     @Test
-    public void getFallScoreFailTest() {
+    void getFallScoreFailTest() {
         Mockito.doReturn(true).when(bowlingValidation).isFail(Mockito.anyString());
         Assertions.assertEquals(0, pinfallFillerImpl.getFallScore("F"));
     }
 
     @ParameterizedTest
     @ValueSource(strings = { "2", "5", "8" })
-    public void getFallScoreTest(String input) {
+    void getFallScoreTest(String input) {
         Mockito.doReturn(false).when(bowlingValidation).isFail(Mockito.anyString());
         Assertions.assertEquals(Integer.parseInt(input), pinfallFillerImpl.getFallScore(input));
     }
 
     @Test
-    public void addPinfallByScoreNoPinFallsNoStrikeTest() {
+    void addPinfallByScoreNoPinFallsNoStrikeTest() {
         Mockito.doReturn(false).when(bowlingValidation).isStrike(Mockito.anyString());
         BowlingFrame frame = pinfallFillerImpl
                 .addPinfallByScore(BowlingFrame.builder().number(1).pinfalls(new ArrayList<>()).build(), "5");
@@ -55,7 +55,7 @@ public class PinfallFillerTest {
     }
 
     @Test
-    public void addPinfallByScoreNoPinFallsStrikeTest() {
+    void addPinfallByScoreNoPinFallsStrikeTest() {
         Mockito.doReturn(true).when(bowlingValidation).isStrike(Mockito.anyString());
         BowlingFrame frame = pinfallFillerImpl
                 .addPinfallByScore(BowlingFrame.builder().number(1).pinfalls(new ArrayList<>()).build(), "10");
@@ -66,7 +66,7 @@ public class PinfallFillerTest {
     }
 
     @Test
-    public void getPinfallForSpareNoSpareTest() {
+    void getPinfallForSpareNoSpareTest() {
         Mockito.doReturn(false).when(bowlingValidation).isSpare(Mockito.anyInt());
         Mockito.doReturn(false).when(bowlingValidation).isFail(Mockito.anyString());
         BowlingFrame frame = BowlingFrame.builder().number(1).pinfalls(new ArrayList<>()).build();
@@ -77,7 +77,7 @@ public class PinfallFillerTest {
     }
 
     @Test
-    public void getPinfallForSpareWithSpareTest() {
+    void getPinfallForSpareWithSpareTest() {
         Mockito.doReturn(true).when(bowlingValidation).isSpare(Mockito.anyInt());
         Mockito.doReturn(false).when(bowlingValidation).isFail(Mockito.anyString());
         BowlingFrame frame = BowlingFrame.builder().number(1).pinfalls(new ArrayList<>()).build();

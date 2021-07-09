@@ -20,7 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import co.com.jobsity.bowling.exception.BadBowlingInputException;
 
 @ExtendWith(MockitoExtension.class)
-public class FileProcessorTest {
+class FileProcessorTest {
 
     @Spy
     private FileProcessorImpl fileProcessor;
@@ -28,12 +28,12 @@ public class FileProcessorTest {
     Path path;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void getFileLinesTest() throws IOException {
+    void getFileLinesTest() throws IOException {
         File file = prepareTestFile();
         List<String> lines = fileProcessor.getFileLines(file.getAbsolutePath());
         Assertions.assertFalse(lines.isEmpty());
@@ -41,7 +41,7 @@ public class FileProcessorTest {
     }
 
     @Test
-    public void getFileLinesLaunchExcTest() {
+    void getFileLinesLaunchExcTest() {
         Assertions.assertThrows(BadBowlingInputException.class, () -> fileProcessor.getFileLines(null));
     }
 

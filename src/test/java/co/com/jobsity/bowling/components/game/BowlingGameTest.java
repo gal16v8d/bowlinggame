@@ -16,7 +16,7 @@ import co.com.jobsity.bowling.components.parser.FileProcessor;
 import co.com.jobsity.bowling.components.parser.InputParser;
 
 @ExtendWith(MockitoExtension.class)
-public class BowlingGameTest {
+class BowlingGameTest {
 
     private BowlingGameImpl bowlingGame;
     @Mock
@@ -25,25 +25,25 @@ public class BowlingGameTest {
     private InputParser inputParser;
 
     @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
         bowlingGame = Mockito.spy(new BowlingGameImpl(fileProcessor, inputParser));
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         Mockito.reset(bowlingGame);
     }
 
     @Test
-    public void executeGameTest() {
+    void executeGameTest() {
         Mockito.doNothing().when(bowlingGame).getScannerMenu();
         bowlingGame.executeGame();
         Mockito.verify(bowlingGame).getScannerMenu();
     }
 
     @Test
-    public void beginGameTest() {
+    void beginGameTest() {
         Mockito.doReturn(new ArrayList<>()).when(fileProcessor).getFileLines(Mockito.anyString());
         Mockito.doReturn(new HashMap<>()).when(inputParser).processInput(Mockito.anyList());
         Mockito.doReturn("").when(inputParser).showOutPut(Mockito.anyMap());

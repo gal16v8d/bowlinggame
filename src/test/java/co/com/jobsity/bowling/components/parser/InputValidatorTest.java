@@ -13,7 +13,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class InputValidatorTest {
+class InputValidatorTest {
 
     private static final String BAD_SCORE = "X";
     private static final String PLAYER = "player";
@@ -21,27 +21,27 @@ public class InputValidatorTest {
     private InputValidatorImpl inputValidator;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @ParameterizedTest
     @NullSource
-    public void lineIsValidNullTest(String[] args) {
+    void lineIsValidNullTest(String[] args) {
         Assertions.assertFalse(inputValidator.lineIsValid(args));
     }
 
     @ParameterizedTest
     @EmptySource
     @CsvSource({ PLAYER, PLAYER + "@" + BAD_SCORE, PLAYER + "@" + BAD_SCORE + "@" + "" })
-    public void lineIsValidFalseTest(String args) {
+    void lineIsValidFalseTest(String args) {
         String[] input = args.split("@");
         Assertions.assertFalse(inputValidator.lineIsValid(input));
     }
 
     @ParameterizedTest
     @ValueSource(strings = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "F" })
-    public void lineIsValidTrueTest(String score) {
+    void lineIsValidTrueTest(String score) {
         String[] input = { PLAYER, score };
         Assertions.assertTrue(inputValidator.lineIsValid(input));
     }
