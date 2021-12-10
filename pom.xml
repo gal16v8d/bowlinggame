@@ -8,7 +8,8 @@
 		<version>2.5.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>co.com.jobsity</groupId>
+	
+	<groupId>com.jobsity</groupId>
 	<artifactId>bowlinggame</artifactId>
 	<version>1.0.001</version>
 	<name>bowlinggame</name>
@@ -34,7 +35,7 @@
 
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<mvn.jacoco.plugin.version>0.8.5</mvn.jacoco.plugin.version>
+		<mvn.jacoco.plugin.version>0.8.7</mvn.jacoco.plugin.version>
 		<mvn.format.plugin.version>2.10.0</mvn.format.plugin.version>
 
 		<!-- If true skips UT test execution -->
@@ -216,6 +217,9 @@
 				<groupId>net.revelc.code.formatter</groupId>
 				<artifactId>formatter-maven-plugin</artifactId>
 				<version>${mvn.format.plugin.version}</version>
+				<configuration>
+					<configFile>${project.basedir}/eclipse-java-google-style.xml</configFile>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
