@@ -10,11 +10,10 @@ import lombok.Generated;
 @Builder
 public class BowlingFrame {
 
-  private int number;
-  private List<Pinfall> pinfalls;
-  private int score;
-  private boolean bonus;
-  private boolean strike;
-  private boolean spare;
-
+    private int number;
+    private List<Pinfall> pinfalls;
+    private int score;
+    private boolean bonus;
+    private boolean strike;
+    private boolean spare;
 }

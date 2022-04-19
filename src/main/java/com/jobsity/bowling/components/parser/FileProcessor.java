@@ -4,6 +4,5 @@ import java.util.List;
 
 public interface FileProcessor {
 
-  List<String> getFileLines(String filePath);
-
+    List<String> getFileLines(String filePath);
 }

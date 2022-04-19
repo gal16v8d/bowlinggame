@@ -10,7 +10,6 @@ import lombok.Generated;
 @Data
 public class PlayerData {
 
-  private String name;
-  private List<BowlingFrame> frames;
-
+    private String name;
+    private List<BowlingFrame> frames;
 }
