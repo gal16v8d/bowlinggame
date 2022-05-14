@@ -12,14 +12,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class FileProcessorImpl implements FileProcessor {
 
-    @Override
-    public List<String> getFileLines(String filePath) {
-        try {
-            File textFile = new File(filePath);
-            return FileUtils.readLines(textFile, StandardCharsets.UTF_8.name());
-        } catch (Exception e) {
-            log.error("Couldn't read file on {}", filePath, e);
-            throw new BadBowlingInputException("Couldn't read file on " + filePath);
-        }
+  @Override
+  public List<String> getFileLines(String filePath) {
+    try {
+      File textFile = new File(filePath);
+      return FileUtils.readLines(textFile, StandardCharsets.UTF_8.name());
+    } catch (Exception e) {
+      log.error("Couldn't read file on {}", filePath, e);
+      throw new BadBowlingInputException("Couldn't read file on " + filePath);
     }
+  }
 }

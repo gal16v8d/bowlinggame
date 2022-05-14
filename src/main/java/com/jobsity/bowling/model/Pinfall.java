@@ -9,6 +9,6 @@ import lombok.Generated;
 @Builder
 public class Pinfall {
 
-    private Integer fall;
-    private String fallValue;
+  private Integer fall;
+  private String fallValue;
 }

@@ -6,9 +6,9 @@ import java.util.Map;
 
 public interface InputParser {
 
-    Map<String, PlayerData> processInput(List<String> inputLines);
+  Map<String, PlayerData> processInput(List<String> inputLines);
 
-    String[] parseLine(String line);
+  String[] parseLine(String line);
 
-    String showOutPut(Map<String, PlayerData> data);
+  String showOutPut(Map<String, PlayerData> data);
 }

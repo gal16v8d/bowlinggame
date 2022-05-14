@@ -20,34 +20,33 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class FileProcessorTest {
 
-    @Spy private FileProcessorImpl fileProcessor;
-    @TempDir Path path;
+  @Spy private FileProcessorImpl fileProcessor;
+  @TempDir Path path;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+  @BeforeEach
+  void setUp() {
+    MockitoAnnotations.openMocks(this);
+  }
 
-    @Test
-    void testGetFileLines() throws IOException {
-        File file = prepareTestFile();
-        List<String> lines = fileProcessor.getFileLines(file.getAbsolutePath());
-        Assertions.assertFalse(lines.isEmpty());
-        Assertions.assertEquals(35, lines.size());
-    }
+  @Test
+  void testGetFileLines() throws IOException {
+    File file = prepareTestFile();
+    List<String> lines = fileProcessor.getFileLines(file.getAbsolutePath());
+    Assertions.assertFalse(lines.isEmpty());
+    Assertions.assertEquals(35, lines.size());
+  }
 
-    @Test
-    void testGetFileLinesLaunchExc() {
-        Assertions.assertThrows(
-                BadBowlingInputException.class, () -> fileProcessor.getFileLines(null));
-    }
+  @Test
+  void testGetFileLinesLaunchExc() {
+    Assertions.assertThrows(BadBowlingInputException.class, () -> fileProcessor.getFileLines(null));
+  }
 
-    private File prepareTestFile() throws IOException {
-        String filePath = path.toFile().getAbsolutePath();
-        File targetFile = new File(filePath + File.separator + "sample.txt");
-        try (InputStream stream = getClass().getResourceAsStream("/input/sample.txt")) {
-            Files.copy(stream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        }
-        return targetFile;
+  private File prepareTestFile() throws IOException {
+    String filePath = path.toFile().getAbsolutePath();
+    File targetFile = new File(filePath + File.separator + "sample.txt");
+    try (InputStream stream = getClass().getResourceAsStream("/input/sample.txt")) {
+      Files.copy(stream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
+    return targetFile;
+  }
 }

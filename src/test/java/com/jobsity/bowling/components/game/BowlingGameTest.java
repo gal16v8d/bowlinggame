@@ -8,6 +8,8 @@ import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.BDDMockito.willReturn;
 import static org.mockito.Mockito.spy;
 
+import com.jobsity.bowling.components.parser.FileProcessor;
+import com.jobsity.bowling.components.parser.InputParser;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,37 +18,35 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import com.jobsity.bowling.components.parser.FileProcessor;
-import com.jobsity.bowling.components.parser.InputParser;
 
 @ExtendWith(MockitoExtension.class)
 class BowlingGameTest {
 
-    private BowlingGameImpl bowlingGame;
-    @Mock private FileProcessor fileProcessor;
-    @Mock private InputParser inputParser;
+  private BowlingGameImpl bowlingGame;
+  @Mock private FileProcessor fileProcessor;
+  @Mock private InputParser inputParser;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        bowlingGame = spy(new BowlingGameImpl(fileProcessor, inputParser));
-    }
+  @BeforeEach
+  void setUp() {
+    MockitoAnnotations.openMocks(this);
+    bowlingGame = spy(new BowlingGameImpl(fileProcessor, inputParser));
+  }
 
-    @Test
-    void testExecuteGame() {
-        willDoNothing().given(bowlingGame).getScannerMenu();
-        bowlingGame.executeGame();
-        then(bowlingGame).should().getScannerMenu();
-    }
+  @Test
+  void testExecuteGame() {
+    willDoNothing().given(bowlingGame).getScannerMenu();
+    bowlingGame.executeGame();
+    then(bowlingGame).should().getScannerMenu();
+  }
 
-    @Test
-    void testBeginGame() {
-        willReturn(new ArrayList<>()).given(fileProcessor).getFileLines(anyString());
-        willReturn(new HashMap<>()).given(inputParser).processInput(anyList());
-        willReturn("").given(inputParser).showOutPut(anyMap());
-        bowlingGame.beginGame("test");
-        then(fileProcessor).should().getFileLines(anyString());
-        then(inputParser).should().processInput(anyList());
-        then(inputParser).should().showOutPut(anyMap());
-    }
+  @Test
+  void testBeginGame() {
+    willReturn(new ArrayList<>()).given(fileProcessor).getFileLines(anyString());
+    willReturn(new HashMap<>()).given(inputParser).processInput(anyList());
+    willReturn("").given(inputParser).showOutPut(anyMap());
+    bowlingGame.beginGame("test");
+    then(fileProcessor).should().getFileLines(anyString());
+    then(inputParser).should().processInput(anyList());
+    then(inputParser).should().showOutPut(anyMap());
+  }
 }

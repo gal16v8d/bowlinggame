@@ -2,9 +2,9 @@ package com.jobsity.bowling.components.game;
 
 public interface BowlingGame {
 
-    void executeGame();
+  void executeGame();
 
-    void getScannerMenu();
+  void getScannerMenu();
 
-    void beginGame(String filePath);
+  void beginGame(String filePath);
 }

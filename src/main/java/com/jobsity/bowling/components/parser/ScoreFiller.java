@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ScoreFiller {
 
-    PlayerData fillFrameScore(PlayerData data);
+  PlayerData fillFrameScore(PlayerData data);
 
-    int calculateScore(List<BowlingFrame> frames, BowlingFrame currentFrame);
+  int calculateScore(List<BowlingFrame> frames, BowlingFrame currentFrame);
 }
