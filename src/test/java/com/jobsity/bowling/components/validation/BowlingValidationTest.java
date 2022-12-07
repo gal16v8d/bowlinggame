@@ -22,7 +22,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class BowlingValidationTest {
 
-  @Spy private BowlingValidationImpl bowlingValidation;
+  @Spy
+  private BowlingValidationImpl bowlingValidation;
 
   @BeforeEach
   void setUp() {
@@ -49,8 +50,8 @@ class BowlingValidationTest {
 
   private static Stream<Arguments> bonusFrameInput() {
     return Stream.of(
-        Arguments.of(
-            BowlingFrame.builder().bonus(true).pinfalls(List.of(arrangePinfall())).build()),
+        Arguments
+            .of(BowlingFrame.builder().bonus(true).pinfalls(List.of(arrangePinfall())).build()),
         Arguments.of(
             BowlingFrame.builder()
                 .bonus(true)
@@ -80,11 +81,10 @@ class BowlingValidationTest {
   @DisplayName("When bonus frame contains 3 elements then frame is finished")
   @Test
   void testIsFrameFinishedWhenBonusFrameNotComplete() {
-    BowlingFrame frame =
-        BowlingFrame.builder()
-            .bonus(true)
-            .pinfalls(List.of(arrangePinfall(), arrangePinfall(), arrangePinfall()))
-            .build();
+    BowlingFrame frame = BowlingFrame.builder()
+        .bonus(true)
+        .pinfalls(List.of(arrangePinfall(), arrangePinfall(), arrangePinfall()))
+        .build();
     Assertions.assertTrue(bowlingValidation.isFrameFinished(frame));
   }
 
@@ -132,10 +132,9 @@ class BowlingValidationTest {
       name = "{index} => When input is '{0}' and bonus is '{1}' then exception is throw")
   @CsvSource({"9,2", "5,1"})
   void testCheckIfValidOnLastFrameLaunchExc(int sumofAllFallPin, int bonusPin) {
-    BadBowlingInputException bbie =
-        Assertions.assertThrows(
-            BadBowlingInputException.class,
-            () -> bowlingValidation.checkIfValidFrameOnLastFrame(sumofAllFallPin, bonusPin));
+    BadBowlingInputException bbie = Assertions.assertThrows(
+        BadBowlingInputException.class,
+        () -> bowlingValidation.checkIfValidFrameOnLastFrame(sumofAllFallPin, bonusPin));
     Assertions.assertEquals(BowlingValidationImpl.VALID_FRAME_LAST_FRAME_MSG, bbie.getMessage());
   }
 
@@ -152,10 +151,9 @@ class BowlingValidationTest {
   @ParameterizedTest(name = "{index} => When input is '{0}' then exception is throw")
   @ValueSource(ints = {11, 100})
   void testCheckIfValidFrameLaunchExc(int sumofAllFallPin) {
-    BadBowlingInputException bbie =
-        Assertions.assertThrows(
-            BadBowlingInputException.class,
-            () -> bowlingValidation.checkIfValidFrame(sumofAllFallPin));
+    BadBowlingInputException bbie = Assertions.assertThrows(
+        BadBowlingInputException.class,
+        () -> bowlingValidation.checkIfValidFrame(sumofAllFallPin));
     Assertions.assertEquals(BowlingValidationImpl.VALID_FRAME_MSG, bbie.getMessage());
   }
 
@@ -177,9 +175,9 @@ class BowlingValidationTest {
   @ParameterizedTest(name = "{index} => When input is '{0}' then exception is throw")
   @ValueSource(ints = {11, 100, 1000})
   void testCheckGameFrameThrowsExc(int frameNumber) {
-    BadBowlingInputException bbie =
-        Assertions.assertThrows(
-            BadBowlingInputException.class, () -> bowlingValidation.checkGameFrames(frameNumber));
+    BadBowlingInputException bbie = Assertions.assertThrows(
+        BadBowlingInputException.class,
+        () -> bowlingValidation.checkGameFrames(frameNumber));
     Assertions.assertEquals(BowlingValidationImpl.GAME_FRAMES_MSG, bbie.getMessage());
   }
 }

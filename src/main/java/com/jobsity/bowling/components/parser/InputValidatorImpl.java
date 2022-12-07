@@ -18,8 +18,7 @@ public class InputValidatorImpl implements InputValidator {
 
   @Override
   public boolean lineIsValid(String[] separatedValues) {
-    return separatedValues != null
-        && separatedValues.length == 2
+    return separatedValues != null && separatedValues.length == 2
         && getValidScoreInputs().containsKey(separatedValues[1]);
   }
 

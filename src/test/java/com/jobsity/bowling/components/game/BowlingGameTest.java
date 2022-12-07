@@ -23,8 +23,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class BowlingGameTest {
 
   private BowlingGameImpl bowlingGame;
-  @Mock private FileProcessor fileProcessor;
-  @Mock private InputParser inputParser;
+  @Mock
+  private FileProcessor fileProcessor;
+  @Mock
+  private InputParser inputParser;
 
   @BeforeEach
   void setUp() {

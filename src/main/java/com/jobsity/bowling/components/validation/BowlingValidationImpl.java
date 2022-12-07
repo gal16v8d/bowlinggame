@@ -17,8 +17,7 @@ public class BowlingValidationImpl implements BowlingValidation {
   protected static final String VALID_FRAME_MSG =
       "Game is not valid due we only support " + BowlingPinfallConstants.MAX_PIN + " pin games.";
   protected static final String VALID_FRAME_LAST_FRAME_MSG =
-      "Third roll is only allowed when you wipe at least "
-          + BowlingPinfallConstants.MAX_PIN
+      "Third roll is only allowed when you wipe at least " + BowlingPinfallConstants.MAX_PIN
           + " pins";
   private static final int BONUS_FRAME_SHOTS = 3;
 

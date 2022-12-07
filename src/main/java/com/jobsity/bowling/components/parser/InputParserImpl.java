@@ -27,13 +27,11 @@ public class InputParserImpl implements InputParser {
   @Override
   public Map<String, PlayerData> processInput(List<String> lines) {
     Map<String, PlayerData> play = new HashMap<>();
-    lines.stream()
-        .forEach(
-            (String line) -> {
-              String[] data = parseLine(line);
-              log.debug("{} is valid {}", line, inputValidator.lineIsValid(data));
-              addRollToPlayer(play, data);
-            });
+    lines.stream().forEach((String line) -> {
+      String[] data = parseLine(line);
+      log.debug("{} is valid {}", line, inputValidator.lineIsValid(data));
+      addRollToPlayer(play, data);
+    });
     play.entrySet().parallelStream().forEach(entry -> scoreFiller.fillFrameScore(entry.getValue()));
     return play;
   }
@@ -48,51 +46,37 @@ public class InputParserImpl implements InputParser {
     StringBuilder playerStats = new StringBuilder();
     StringBuilder pinfallLine = new StringBuilder();
     StringBuilder scoreLine = new StringBuilder();
-    play.entrySet()
-        .forEach(
-            entry -> {
-              log.debug("Showing stats for {}", entry.getKey());
-              playerStats.append(entry.getKey()).append(System.lineSeparator());
-              pinfallLine
-                  .append(BowlingOutputConstants.PINFALLS)
-                  .append(BowlingOutputConstants.SEPARATOR);
-              scoreLine
-                  .append(BowlingOutputConstants.SCORE)
-                  .append(BowlingOutputConstants.SEPARATOR);
-              PlayerData data = entry.getValue();
-              data.getFrames().stream()
-                  .forEach(
-                      (BowlingFrame frame) -> {
-                        frame.getPinfalls().stream()
-                            .forEach(
-                                pinfall -> {
-                                  pinfallLine
-                                      .append(pinfall.getFallValue())
-                                      .append(BowlingOutputConstants.SEPARATOR);
-                                  log.debug(
-                                      "Showing stats for {}" + " and frame {}," + " pinfall '{}'",
-                                      entry.getKey(),
-                                      frame.getNumber(),
-                                      pinfall.getFallValue());
-                                });
-                        scoreLine
-                            .append(frame.getScore())
-                            .append(BowlingOutputConstants.SEPARATOR)
-                            .append(BowlingOutputConstants.SEPARATOR);
-                        log.debug(
-                            "Showing score for {} on frame {} is {}",
-                            entry.getKey(),
-                            frame.getNumber(),
-                            frame.getScore());
-                      });
-              playerStats.append(pinfallLine.toString()).append(System.lineSeparator());
-              playerStats.append(scoreLine.toString()).append(System.lineSeparator());
-              pinfallLine.setLength(0);
-              scoreLine.setLength(0);
-            });
+    play.entrySet().forEach(entry -> {
+      log.debug("Showing stats for {}", entry.getKey());
+      playerStats.append(entry.getKey()).append(System.lineSeparator());
+      pinfallLine.append(BowlingOutputConstants.PINFALLS).append(BowlingOutputConstants.SEPARATOR);
+      scoreLine.append(BowlingOutputConstants.SCORE).append(BowlingOutputConstants.SEPARATOR);
+      PlayerData data = entry.getValue();
+      data.getFrames().stream().forEach((BowlingFrame frame) -> {
+        frame.getPinfalls().stream().forEach(pinfall -> {
+          pinfallLine.append(pinfall.getFallValue()).append(BowlingOutputConstants.SEPARATOR);
+          log.debug(
+              "Showing stats for {}" + " and frame {}," + " pinfall '{}'",
+              entry.getKey(),
+              frame.getNumber(),
+              pinfall.getFallValue());
+        });
+        scoreLine.append(frame.getScore())
+            .append(BowlingOutputConstants.SEPARATOR)
+            .append(BowlingOutputConstants.SEPARATOR);
+        log.debug(
+            "Showing score for {} on frame {} is {}",
+            entry.getKey(),
+            frame.getNumber(),
+            frame.getScore());
+      });
+      playerStats.append(pinfallLine.toString()).append(System.lineSeparator());
+      playerStats.append(scoreLine.toString()).append(System.lineSeparator());
+      pinfallLine.setLength(0);
+      scoreLine.setLength(0);
+    });
     StringBuilder output = new StringBuilder();
-    output
-        .append(System.lineSeparator())
+    output.append(System.lineSeparator())
         .append(buildFrameLine())
         .append(System.lineSeparator())
         .append(playerStats.toString());
@@ -103,8 +87,7 @@ public class InputParserImpl implements InputParser {
     StringBuilder frameLine = new StringBuilder(BowlingOutputConstants.FRAME);
     frameLine.append(BowlingOutputConstants.SEPARATOR);
     for (int i = 1; i <= BowlingPinfallConstants.MAX_PIN; i++) {
-      frameLine
-          .append(i)
+      frameLine.append(i)
           .append(BowlingOutputConstants.SEPARATOR)
           .append(BowlingOutputConstants.SEPARATOR);
     }

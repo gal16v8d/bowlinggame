@@ -20,8 +20,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class FileProcessorTest {
 
-  @Spy private FileProcessorImpl fileProcessor;
-  @TempDir Path path;
+  @Spy
+  private FileProcessorImpl fileProcessor;
+  @TempDir
+  Path path;
 
   @BeforeEach
   void setUp() {

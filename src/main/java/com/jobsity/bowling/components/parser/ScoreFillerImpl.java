@@ -56,13 +56,15 @@ public class ScoreFillerImpl implements ScoreFiller {
   }
 
   public List<Pinfall> getNextValidPinFalls(BowlingFrame frame) {
-    return frame.getPinfalls().stream()
+    return frame.getPinfalls()
+        .stream()
         .filter(fall -> StringUtils.isNotBlank(fall.getFallValue()))
         .collect(Collectors.toList());
   }
 
   public int sumFramePinfalls(BowlingFrame currentFrame) {
-    return currentFrame.getPinfalls().stream()
+    return currentFrame.getPinfalls()
+        .stream()
         .mapToInt(fall -> Optional.ofNullable(fall.getFall()).orElse(0))
         .sum();
   }

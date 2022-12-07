@@ -17,7 +17,8 @@ class InputValidatorTest {
 
   private static final String BAD_SCORE = "X";
   private static final String PLAYER = "player";
-  @Spy private InputValidatorImpl inputValidator;
+  @Spy
+  private InputValidatorImpl inputValidator;
 
   @BeforeEach
   void setUp() {

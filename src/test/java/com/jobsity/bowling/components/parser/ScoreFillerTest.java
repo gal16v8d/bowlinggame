@@ -18,7 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class ScoreFillerTest {
 
-  @Spy private ScoreFillerImpl scoreFiller;
+  @Spy
+  private ScoreFillerImpl scoreFiller;
 
   @BeforeEach
   void setUp() {
@@ -39,29 +40,57 @@ class ScoreFillerTest {
     List<BowlingFrame> frames = new ArrayList<>();
     frames.add(
         initFrame(
-            1, true, false, false, new Pinfall[] {initPinfall("", null), initPinfall("X", 10)}));
+            1,
+            true,
+            false,
+            false,
+            new Pinfall[] {initPinfall("", null), initPinfall("X", 10)}));
     frames.add(
         initFrame(2, false, true, false, new Pinfall[] {initPinfall("7", 7), initPinfall("/", 3)}));
     frames.add(
         initFrame(
-            3, false, false, false, new Pinfall[] {initPinfall("9", 9), initPinfall("0", 0)}));
+            3,
+            false,
+            false,
+            false,
+            new Pinfall[] {initPinfall("9", 9), initPinfall("0", 0)}));
     frames.add(
         initFrame(
-            4, true, false, false, new Pinfall[] {initPinfall("", null), initPinfall("X", 10)}));
+            4,
+            true,
+            false,
+            false,
+            new Pinfall[] {initPinfall("", null), initPinfall("X", 10)}));
     frames.add(
         initFrame(
-            5, false, false, false, new Pinfall[] {initPinfall("0", 0), initPinfall("8", 8)}));
+            5,
+            false,
+            false,
+            false,
+            new Pinfall[] {initPinfall("0", 0), initPinfall("8", 8)}));
     frames.add(
         initFrame(6, false, true, false, new Pinfall[] {initPinfall("8", 8), initPinfall("/", 2)}));
     frames.add(
         initFrame(
-            7, false, false, false, new Pinfall[] {initPinfall("F", 0), initPinfall("6", 6)}));
+            7,
+            false,
+            false,
+            false,
+            new Pinfall[] {initPinfall("F", 0), initPinfall("6", 6)}));
     frames.add(
         initFrame(
-            8, true, false, false, new Pinfall[] {initPinfall("", null), initPinfall("X", 10)}));
+            8,
+            true,
+            false,
+            false,
+            new Pinfall[] {initPinfall("", null), initPinfall("X", 10)}));
     frames.add(
         initFrame(
-            9, true, false, false, new Pinfall[] {initPinfall("", null), initPinfall("X", 10)}));
+            9,
+            true,
+            false,
+            false,
+            new Pinfall[] {initPinfall("", null), initPinfall("X", 10)}));
     frames.add(
         initFrame(
             10,
@@ -76,8 +105,8 @@ class ScoreFillerTest {
     return Pinfall.builder().fall(fall).fallValue(fallValue).build();
   }
 
-  private static BowlingFrame initFrame(
-      int num, boolean isStrike, boolean isSpare, boolean isBonus, Pinfall[] pinfalls) {
+  private static BowlingFrame initFrame(int num, boolean isStrike, boolean isSpare, boolean isBonus,
+      Pinfall[] pinfalls) {
     return BowlingFrame.builder()
         .bonus(isBonus)
         .number(num)
@@ -89,15 +118,14 @@ class ScoreFillerTest {
 
   @Test
   void testGetNextValidPinFalls() {
-    BowlingFrame frame =
-        BowlingFrame.builder()
-            .pinfalls(
-                List.of(
-                    arrangePinfallWithFallValue(null),
-                    arrangePinfallWithFallValue(""),
-                    arrangePinfallWithFallValue(" "),
-                    arrangePinfallWithFallValue("X")))
-            .build();
+    BowlingFrame frame = BowlingFrame.builder()
+        .pinfalls(
+            List.of(
+                arrangePinfallWithFallValue(null),
+                arrangePinfallWithFallValue(""),
+                arrangePinfallWithFallValue(" "),
+                arrangePinfallWithFallValue("X")))
+        .build();
     List<Pinfall> validPinfall = scoreFiller.getNextValidPinFalls(frame);
     Assertions.assertNotNull(validPinfall);
     Assertions.assertFalse(validPinfall.isEmpty());
@@ -110,10 +138,9 @@ class ScoreFillerTest {
 
   @Test
   void testSumFramePinfalls() {
-    BowlingFrame frame =
-        BowlingFrame.builder()
-            .pinfalls(List.of(arrangePinfall(null), arrangePinfall(10), arrangePinfall(8)))
-            .build();
+    BowlingFrame frame = BowlingFrame.builder()
+        .pinfalls(List.of(arrangePinfall(null), arrangePinfall(10), arrangePinfall(8)))
+        .build();
     Assertions.assertEquals(18, scoreFiller.sumFramePinfalls(frame));
   }
 

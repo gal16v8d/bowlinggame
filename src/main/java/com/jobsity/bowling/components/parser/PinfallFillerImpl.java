@@ -18,8 +18,7 @@ public class PinfallFillerImpl implements PinfallFiller {
 
   @Override
   public int getFallScore(String score) {
-    return bowlingValidation.isFail(score)
-        ? BowlingPinfallConstants.getFail().get(score)
+    return bowlingValidation.isFail(score) ? BowlingPinfallConstants.getFail().get(score)
         : Integer.parseInt(score);
   }
 

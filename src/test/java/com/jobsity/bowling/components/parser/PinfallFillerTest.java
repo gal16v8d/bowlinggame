@@ -23,7 +23,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class PinfallFillerTest {
 
-  @Mock private BowlingValidation bowlingValidation;
+  @Mock
+  private BowlingValidation bowlingValidation;
   private PinfallFillerImpl pinfallFillerImpl;
 
   @BeforeEach
@@ -48,9 +49,9 @@ class PinfallFillerTest {
   @Test
   void testAddPinfallByScoreNoPinFallsNoStrike() {
     willReturn(false).given(bowlingValidation).isStrike(anyString());
-    BowlingFrame frame =
-        pinfallFillerImpl.addPinfallByScore(
-            BowlingFrame.builder().number(1).pinfalls(new ArrayList<>()).build(), "5");
+    BowlingFrame frame = pinfallFillerImpl.addPinfallByScore(
+        BowlingFrame.builder().number(1).pinfalls(new ArrayList<>()).build(),
+        "5");
     Assertions.assertNotNull(frame);
     Assertions.assertNotNull(frame.getPinfalls());
     Assertions.assertEquals(1, frame.getPinfalls().size());
@@ -59,9 +60,9 @@ class PinfallFillerTest {
   @Test
   void testAddPinfallByScoreNoPinFallsStrike() {
     willReturn(true).given(bowlingValidation).isStrike(anyString());
-    BowlingFrame frame =
-        pinfallFillerImpl.addPinfallByScore(
-            BowlingFrame.builder().number(1).pinfalls(new ArrayList<>()).build(), "10");
+    BowlingFrame frame = pinfallFillerImpl.addPinfallByScore(
+        BowlingFrame.builder().number(1).pinfalls(new ArrayList<>()).build(),
+        "10");
     Assertions.assertNotNull(frame);
     Assertions.assertNotNull(frame.getPinfalls());
     Assertions.assertTrue(frame.isStrike());
