@@ -1,9 +1,8 @@
 package com.jobsity.bowling.constants;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@UtilityClass
 public final class BowlingOutputConstants {
 
   public static final String FRAME = "Frame   ";

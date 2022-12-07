@@ -18,7 +18,7 @@ public class PinfallFillerImpl implements PinfallFiller {
 
   @Override
   public int getFallScore(String score) {
-    return bowlingValidation.isFail(score) ? BowlingPinfallConstants.getFail().get(score)
+    return bowlingValidation.isFail(score) ? BowlingPinfallConstants.FAIL.get(score)
         : Integer.parseInt(score);
   }
 
@@ -30,7 +30,7 @@ public class PinfallFillerImpl implements PinfallFiller {
         falls.add(Pinfall.builder().fallValue("").build());
         falls.add(
             Pinfall.builder()
-                .fallValue(BowlingPinfallConstants.getStrike().get(score))
+                .fallValue(BowlingPinfallConstants.STRIKE.get(score))
                 .fall(getFallScore(score))
                 .build());
         frame.setStrike(true);
@@ -53,7 +53,7 @@ public class PinfallFillerImpl implements PinfallFiller {
     if (bowlingValidation.isStrike(score)) {
       falls.add(
           Pinfall.builder()
-              .fallValue(BowlingPinfallConstants.getStrike().get(score))
+              .fallValue(BowlingPinfallConstants.STRIKE.get(score))
               .fall(getFallScore(score))
               .build());
     } else {

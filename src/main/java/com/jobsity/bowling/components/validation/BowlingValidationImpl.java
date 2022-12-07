@@ -12,13 +12,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class BowlingValidationImpl implements BowlingValidation {
 
-  protected static final String GAME_FRAMES_MSG =
-      "Game is not valid due we only support " + BowlingPinfallConstants.MAX_FRAME + " frames.";
+  protected static final String GAME_FRAMES_MSG = "Game is not valid due we only support %s frames"
+      .formatted(BowlingPinfallConstants.MAX_FRAME);
   protected static final String VALID_FRAME_MSG =
-      "Game is not valid due we only support " + BowlingPinfallConstants.MAX_PIN + " pin games.";
+      "Game is not valid due we only support %s pin games"
+          .formatted(BowlingPinfallConstants.MAX_PIN);
   protected static final String VALID_FRAME_LAST_FRAME_MSG =
-      "Third roll is only allowed when you wipe at least " + BowlingPinfallConstants.MAX_PIN
-          + " pins";
+      "Third roll is only allowed when you wipe at least %s pins"
+          .formatted(BowlingPinfallConstants.MAX_PIN);
   private static final int BONUS_FRAME_SHOTS = 3;
 
   @Override
@@ -30,12 +31,12 @@ public class BowlingValidationImpl implements BowlingValidation {
 
   @Override
   public boolean isFail(String score) {
-    return BowlingPinfallConstants.getFail().containsKey(score);
+    return BowlingPinfallConstants.FAIL.containsKey(score);
   }
 
   @Override
   public boolean isStrike(String score) {
-    return BowlingPinfallConstants.getStrike().containsKey(score);
+    return BowlingPinfallConstants.STRIKE.containsKey(score);
   }
 
   @Override
