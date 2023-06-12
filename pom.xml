@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.0</version>
+		<version>3.1.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<groupId>com.jobsity</groupId>
 	<artifactId>bowlinggame</artifactId>
-	<version>1.0.001</version>
+	<version>1.0.2</version>
 	<name>bowlinggame</name>
 	<description>Spring commandline bowling game</description>
 
@@ -24,20 +24,21 @@
 
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<mvn.jacoco.plugin.version>0.8.8</mvn.jacoco.plugin.version>
-		<mvn.spotless.plugin.version>2.22.1</mvn.spotless.plugin.version>
-		<mvn.checkstyle.plugin.version>3.1.2</mvn.checkstyle.plugin.version>
-		<mvn.dependency-check.plugin.version>7.1.0</mvn.dependency-check.plugin.version>
+		
+		<mvn.jacoco.plugin.version>0.8.10</mvn.jacoco.plugin.version>
+		<mvn.spotless.plugin.version>2.33.0</mvn.spotless.plugin.version>
+		<mvn.checkstyle.plugin.version>3.3.0</mvn.checkstyle.plugin.version>
+		<mvn.dependency-check.plugin.version>8.2.1</mvn.dependency-check.plugin.version>
 
 		<!-- If true skips UT test execution -->
 		<skip.unit.tests>false</skip.unit.tests>
 		<!-- If true skips IT test execution -->
 		<skip.integration.tests>false</skip.integration.tests>
 
-		<checkstyle.version>10.1</checkstyle.version>
+		<checkstyle.version>10.12.0</checkstyle.version>
 
 		<!-- Other dependenies -->
-		<commons.io.version>2.11.0</commons.io.version>
+		<commons.io.version>2.13.0</commons.io.version>
 	</properties>
 
 	<dependencies>
