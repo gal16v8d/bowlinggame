@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.5</version>
+		<version>3.2.1</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<groupId>com.jobsity</groupId>
 	<artifactId>bowlinggame</artifactId>
-	<version>1.1.0</version>
+	<version>1.1.1</version>
 	<name>bowlinggame</name>
 	<description>Spring commandline bowling game</description>
 
